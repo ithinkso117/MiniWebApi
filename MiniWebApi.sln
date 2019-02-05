@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.329
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniWebApi", "MiniWebApi\MiniWebApi.csproj", "{BDDEF76A-9EE0-40B7-89E2-65FBB73A4B45}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestWebApi", "TestWebApi\TestWebApi.csproj", "{DCE35E76-3908-4309-8636-3EF8D3B38348}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BDDEF76A-9EE0-40B7-89E2-65FBB73A4B45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDDEF76A-9EE0-40B7-89E2-65FBB73A4B45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDDEF76A-9EE0-40B7-89E2-65FBB73A4B45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDDEF76A-9EE0-40B7-89E2-65FBB73A4B45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCE35E76-3908-4309-8636-3EF8D3B38348}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCE35E76-3908-4309-8636-3EF8D3B38348}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCE35E76-3908-4309-8636-3EF8D3B38348}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCE35E76-3908-4309-8636-3EF8D3B38348}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4E109391-D90B-48B4-8254-EE46660BEC9D}
+	EndGlobalSection
+EndGlobal
