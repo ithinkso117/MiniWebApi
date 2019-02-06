@@ -38,7 +38,10 @@ namespace MiniWebApi.Utilities
         public bool IsMatch(HttpListenerContext context, CallingMethod callingMethod)
         {
             if (callingMethod.WebApiType != WebApiType.Get) return false;
+
             var queryData = context.Request.QueryString;
+
+            var argCount = 0;
             foreach (var parameter in callingMethod.Parameters)
             {
                 if (parameter.FromType == FromType.FromUrl)
@@ -46,7 +49,8 @@ namespace MiniWebApi.Utilities
                     var paramType = parameter.ParameterType;
                     if (!_properties.ContainsKey(paramType))
                     {
-                        _properties.Add(paramType, paramType.GetProperties().Where(x=>x.CanRead && x.CanWrite).ToArray());
+                        _properties.Add(paramType,
+                            paramType.GetProperties().Where(x => x.CanRead && x.CanWrite).ToArray());
                     }
 
                     var properties = _properties[paramType];
@@ -65,9 +69,11 @@ namespace MiniWebApi.Utilities
                         return false;
                     }
                 }
+
+                argCount++;
             }
 
-            return true;
+            return argCount == callingMethod.Parameters.Count;
         }
     }
 
@@ -98,6 +104,8 @@ namespace MiniWebApi.Utilities
         {
             if (!WebApiTypeMatched(callingMethod)) return false;
             var queryData = context.Request.QueryString;
+
+            var argCount = 0;
             foreach (var parameter in callingMethod.Parameters)
             {
                 var paramType = parameter.ParameterType;
@@ -133,9 +141,11 @@ namespace MiniWebApi.Utilities
                         return false;
                     }
                 }
+
+                argCount++;
             }
 
-            return true;
+            return argCount == callingMethod.Parameters.Count;
         }
     }
 

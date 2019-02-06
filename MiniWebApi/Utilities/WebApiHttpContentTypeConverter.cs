@@ -23,7 +23,6 @@
                 switch (parts[0].Trim())
                 {
                     case "application/json":
-                    case "text/plain":
                         return WebApiHttpContentType.Json;
                     case "application/x-www-form-urlencoded":
                         return WebApiHttpContentType.XWwwFormUrlencoded;
