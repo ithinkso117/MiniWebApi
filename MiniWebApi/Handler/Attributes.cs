@@ -75,6 +75,16 @@ namespace MiniWebApi.Handler
     /// </summary>
     public class GetAttribute : WebApiMethodAttribute
     {
+
+        public GetAttribute()
+        {
+        }
+
+        public GetAttribute(string name):base(name)
+        {
+           
+        }
+
         public override WebApiType ToWebApiType()
         {
             return WebApiType.Get;
@@ -87,6 +97,16 @@ namespace MiniWebApi.Handler
     /// </summary>
     public class PutAttribute : WebApiMethodAttribute
     {
+
+        public PutAttribute()
+        {
+        }
+
+        public PutAttribute(string name) : base(name)
+        {
+
+        }
+
         public override WebApiType ToWebApiType()
         {
             return WebApiType.Put;
@@ -99,6 +119,15 @@ namespace MiniWebApi.Handler
     /// </summary>
     public class PostAttribute : WebApiMethodAttribute
     {
+        public PostAttribute()
+        {
+        }
+
+        public PostAttribute(string name) : base(name)
+        {
+
+        }
+
         public override WebApiType ToWebApiType()
         {
             return WebApiType.Post;
@@ -111,6 +140,16 @@ namespace MiniWebApi.Handler
     /// </summary>
     public class DeleteAttribute : WebApiMethodAttribute
     {
+
+        public DeleteAttribute()
+        {
+        }
+
+        public DeleteAttribute(string name) : base(name)
+        {
+
+        }
+
         public override WebApiType ToWebApiType()
         {
             return WebApiType.Delete;
