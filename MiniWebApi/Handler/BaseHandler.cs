@@ -42,7 +42,12 @@ namespace MiniWebApi.Handler
                     throw new InvalidOperationException($"Method {method.Name} should be public for WebApi method.");
                 }
 
-                var methodWebApiType = ((WebApiMethodAttribute) methodWebApiAttrs[0]).ToWebApiType();
+                var webApiMethodAttribute = (WebApiMethodAttribute)methodWebApiAttrs[0];
+
+                var methodWebApiType = webApiMethodAttribute.ToWebApiType();
+                var methodName = string.IsNullOrWhiteSpace(webApiMethodAttribute.Name)
+                    ? method.Name
+                    : webApiMethodAttribute.Name;
 
                 //Get all parameters
                 var parameters = method.GetParameters();
@@ -50,7 +55,7 @@ namespace MiniWebApi.Handler
                 //If the first parameter is not WebApiHttpContext throw the exception
                 if (parameters[0].ParameterType != typeof(WebApiHttpContext))
                 {
-                    throw new InvalidDataException($"The first argument of method {method} must be WebApiHttpContext");
+                    throw new InvalidDataException($"The first argument of method {method.Name} must be WebApiHttpContext");
                 }
 
                 //Generate CallingParameters
@@ -140,7 +145,7 @@ namespace MiniWebApi.Handler
 
                 //Create the delegate by dynamic method.
                 var action = (Action<object, object[]>)dynamicMethod.CreateDelegate(typeof(Action<object, object[]>));
-                var callingMethod = new CallingMethod(method.Name, methodWebApiType, paramInfos, this, new WebApiMethod(action));
+                var callingMethod = new CallingMethod(methodName, methodWebApiType, paramInfos, this, new WebApiMethod(action));
                 _callingMethods.Add(callingMethod.Name, callingMethod);
             }
 
