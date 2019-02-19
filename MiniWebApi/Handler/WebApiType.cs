@@ -6,7 +6,5 @@
         Post,
         Put,
         Delete,
-        FromUrl,
-        FromBody,
     }
 }

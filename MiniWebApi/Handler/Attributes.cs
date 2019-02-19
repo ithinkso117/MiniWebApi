@@ -45,8 +45,23 @@ namespace MiniWebApi.Handler
     /// <summary>
     /// The WebApi Attribute, which could be Get,Put,Post,Delete...
     /// </summary>
-    public abstract class WebApiAttribute : Attribute
+    public abstract class WebApiMethodAttribute : Attribute
     {
+        /// <summary>
+        /// Gets the name of this method for web api.
+        /// </summary>
+        public string Name { get; }
+
+        protected WebApiMethodAttribute()
+        {
+            Name = string.Empty;
+        }
+
+        protected WebApiMethodAttribute(string name)
+        {
+            Name = name;
+        }
+
         /// <summary>
         /// Get the WebApiType from this Attribute.
         /// </summary>
@@ -58,7 +73,7 @@ namespace MiniWebApi.Handler
     /// <summary>
     /// Get attribute
     /// </summary>
-    public class GetAttribute : WebApiAttribute
+    public class GetAttribute : WebApiMethodAttribute
     {
         public override WebApiType ToWebApiType()
         {
@@ -70,7 +85,7 @@ namespace MiniWebApi.Handler
     /// <summary>
     /// Put attribute
     /// </summary>
-    public class PutAttribute : WebApiAttribute
+    public class PutAttribute : WebApiMethodAttribute
     {
         public override WebApiType ToWebApiType()
         {
@@ -82,7 +97,7 @@ namespace MiniWebApi.Handler
     /// <summary>
     /// Post attribute
     /// </summary>
-    public class PostAttribute : WebApiAttribute
+    public class PostAttribute : WebApiMethodAttribute
     {
         public override WebApiType ToWebApiType()
         {
@@ -94,7 +109,7 @@ namespace MiniWebApi.Handler
     /// <summary>
     /// Delete attribute
     /// </summary>
-    public class DeleteAttribute : WebApiAttribute
+    public class DeleteAttribute : WebApiMethodAttribute
     {
         public override WebApiType ToWebApiType()
         {
@@ -102,26 +117,26 @@ namespace MiniWebApi.Handler
         }
     }
 
-    /// <inheritdoc />
+    /// <summary>
+    /// Defines the parent for FromUrl and FromBody.
+    /// </summary>
+    public class WebApiParameterAttribute : Attribute
+    {
+
+    }
+
     /// <summary>
     /// FromUrl attribute
     /// </summary>
-    public class FromUrlAttribute : WebApiAttribute
+    public class FromUrlAttribute: WebApiParameterAttribute
     {
-        public override WebApiType ToWebApiType()
-        {
-            return WebApiType.FromUrl;
-        }
+
     }
 
     /// <summary>
     /// FromBody attribute
     /// </summary>
-    public class FromBodyAttribute : WebApiAttribute
+    public class FromBodyAttribute: WebApiParameterAttribute
     {
-        public override WebApiType ToWebApiType()
-        {
-            return WebApiType.FromBody;
-        }
     }
 }

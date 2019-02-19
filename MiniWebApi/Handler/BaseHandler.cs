@@ -22,22 +22,27 @@ namespace MiniWebApi.Handler
             var methods = GetType().GetMethods();
             foreach (var method in methods.Where(x => x.IsVirtual == false && x.IsStatic == false && x.ReturnType == typeof(void)))
             {
-                WebApiType methodWebApiType;
                 //Get if the method support WebApiAttribute
-                var methodWebApiAttrs = method.GetCustomAttributes(typeof(WebApiAttribute), true);
-                if (methodWebApiAttrs.Length > 0)
-                {
-                    methodWebApiType = ((WebApiAttribute)methodWebApiAttrs[0]).ToWebApiType();
-                    if (methodWebApiType == WebApiType.FromUrl || methodWebApiType == WebApiType.FromBody)
-                    {
-                        throw new InvalidOperationException($"Method {method.Name} can not mark as $[{methodWebApiType}].");
-                    }
-                }
-                else
+                var methodWebApiAttrs = method.GetCustomAttributes(typeof(WebApiMethodAttribute), true);
+                if (methodWebApiAttrs.Length == 0)
                 {
                     //If no WebApiAttribute, do not add it into the method dictionary.
                     continue;
                 }
+
+                if (methodWebApiAttrs.Length >1)
+                {
+                    // Can not define more than 2 attributes
+                    throw new InvalidOperationException($"Method {method.Name} defined more than one WebApi method attributes.");
+                }
+
+                if (!method.IsPublic)
+                {
+                    //Web api method should be public
+                    throw new InvalidOperationException($"Method {method.Name} should be public for WebApi method.");
+                }
+
+                var methodWebApiType = ((WebApiMethodAttribute) methodWebApiAttrs[0]).ToWebApiType();
 
                 //Get all parameters
                 var parameters = method.GetParameters();
@@ -58,14 +63,14 @@ namespace MiniWebApi.Handler
                     }
                     var fromType = FromType.None;
                     //Get if the parameter support WebApiAttribute
-                    var paramWebApiAttrs = parameterInfo.GetCustomAttributes(typeof(WebApiAttribute), true);
+                    var paramWebApiAttrs = parameterInfo.GetCustomAttributes(typeof(WebApiParameterAttribute), true);
                     if (paramWebApiAttrs.Length > 0)
                     {
-                        if (((WebApiAttribute) paramWebApiAttrs[0]).ToWebApiType() == WebApiType.FromUrl)
+                        if (paramWebApiAttrs[0] is FromUrlAttribute)
                         {
                             fromType = FromType.FromUrl;
                         }
-                        else if (((WebApiAttribute) paramWebApiAttrs[0]).ToWebApiType() == WebApiType.FromBody)
+                        else if (paramWebApiAttrs[0] is FromBodyAttribute)
                         {
                             fromType = FromType.FromBody;
                         }
