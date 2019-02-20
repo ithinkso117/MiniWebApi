@@ -37,7 +37,7 @@ namespace MiniWebApi.Utilities
         public WebApiArgument[] Parse(HttpListenerContext context, CallingParameter[] callingParameters)
         {
             var queryData = context.Request.QueryString;
-            var webApiHttpContext = new WebApiHttpContext(new WebApiHttpRequest(), new WebApiHttpResponse(context));
+            var webApiHttpContext = new WebApiHttpContext(new WebApiHttpRequest(context), new WebApiHttpResponse(context));
             var args = new List<WebApiArgument> {new WebApiArgument("context", webApiHttpContext)};
             
             foreach (var parameter in callingParameters)
@@ -88,7 +88,7 @@ namespace MiniWebApi.Utilities
         {
             var contentType = WebApiHttpContentTypeConverter.ToContentType(context.Request.ContentType);
             var queryData = context.Request.QueryString;
-            var webApiHttpContext = new WebApiHttpContext(new WebApiHttpRequest(), new WebApiHttpResponse(context));
+            var webApiHttpContext = new WebApiHttpContext(new WebApiHttpRequest(context), new WebApiHttpResponse(context));
             var args = new List<WebApiArgument> { new WebApiArgument("context", webApiHttpContext) };
 
             foreach (var parameter in callingParameters)
