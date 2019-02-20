@@ -6,7 +6,7 @@ using MiniWebApi.Log;
 
 namespace MiniWebApi.Network
 {
-    public class WebApiServer:IDisposable
+    public class WebApiServer : IDisposable
     {
         private readonly ManualResetEvent _stopEvent = new ManualResetEvent(true);
         private readonly WebApiRouter _router;
@@ -33,18 +33,25 @@ namespace MiniWebApi.Network
             Logger.Write($"WebApiServer started on port:{port}");
             while (!_stopEvent.WaitOne(1))
             {
-                var context =  _listener.GetContext();
-                Task.Run(() =>
+                try
                 {
-                    try
+                    var context = _listener.GetContext();
+                    Task.Run(() =>
                     {
-                        _router.DispatchCall(context);
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e);
-                    }
-                });
+                        try
+                        {
+                            _router.DispatchCall(context);
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.Write($"Dispatch call error:{ex.Message}");
+                        }
+                    });
+                }
+                catch (Exception ex)
+                {
+                    Logger.Write($"GetContext error:{ex.Message}");
+                }
             }
         }
 
@@ -58,7 +65,7 @@ namespace MiniWebApi.Network
 
         private void DoDispose()
         {
-            if (_disposed)
+            if (!_disposed)
             {
                 Stop();
                 _disposed = true;
