@@ -52,6 +52,26 @@ namespace MiniWebApi.Network
         }
 
         /// <summary>
+        /// Write binary back to the requester.
+        /// </summary>
+        /// <param name="data">The data to write</param>
+        public void Write(byte[] data)
+        {
+            if (data == null || data.Length == 0)
+            {
+                _context.Response.StatusCode = StatusCode;
+                _context.Response.OutputStream.Close();
+            }
+            else
+            {
+                _context.Response.StatusCode = StatusCode;
+                _context.Response.OutputStream.Write(data, 0, data.Length);
+                _context.Response.OutputStream.Flush();
+                _context.Response.OutputStream.Close();
+            }
+        }
+
+        /// <summary>
         /// Write an OK to client without content.
         /// </summary>
         public void WriteOk()
