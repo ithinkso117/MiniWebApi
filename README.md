@@ -18,14 +18,14 @@ MiniWebApi is a lightweight WebAPI framework for .NET which can help you build a
 
 Step 1. Define the handler for handling the WebAPI request.
 
-
+```csharp
     public class TestObject
     {
         public string Name { get; set; }
 
         public int Age { get; set; }
     }
-
+    
     [WebApiHandler("Test")]
     public class TestHandler:BaseHandler
     {
@@ -60,13 +60,14 @@ Step 1. Define the handler for handling the WebAPI request.
             context.Response.Write($"Hello {obj.Name}, your age is {obj.Age}");
         }
     }
+```
     
     
 Step 2. Start the server which contains your handlers.
-
+```csharp
         var server = new WebApiServer("api");
         server.Start(8090);
-
+```
 
 Contact mail: ithinkso117@163.com
 
