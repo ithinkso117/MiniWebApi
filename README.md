@@ -8,7 +8,7 @@ MiniWebApi is a lightweight WebAPI framework for .NET which can help you build a
 - [x] Support WebAPI protocol without anyother ASP.NET part.
 - [x] Build-in http server.
 - [x] Support [FromUrl] and [FromBody]
-- [x] Use Emit to improve performance and reduce memory useage.
+- [x] Use Emit to improve performance and reduce memory usage.
 - [x] Signton pattern for request handler, each request will be handled by the same handler, and they are thread-safe.
 - [x] Attributes support, almost the same as the MVC WebAPI。
 
